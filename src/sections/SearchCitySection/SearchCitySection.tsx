@@ -6,6 +6,7 @@ import { SearchCitySectionProps } from "./SearchCitySection.types";
 import { useFetchCitySuggestions } from "./hooks";
 import SearchCityDisplay from "./SearchCityDisplay";
 import { Button } from "@/components/ui/button";
+import { ErrorBoundary } from "@/components";
 
 const SearchCitySection: React.FC<SearchCitySectionProps> = ({
   onCitySelect,
@@ -50,26 +51,28 @@ const SearchCitySection: React.FC<SearchCitySectionProps> = ({
   };
 
   return (
-    <section className="max-w-sm flex items-center">
-      <Button
-        variant="outline"
-        size="icon"
-        className="mr-2"
-        onClick={onSetCurrenLocation}
-        title="Use current location"
-        aria-label="Use current location"
-      >
-        <MapPin className="absolute h-4 w-4" />
-      </Button>
-      <SearchCityDisplay
-        selectedCity={selectedCity}
-        onSelectedValueChange={onSelectedValueChange}
-        searchKeyword={searchKeyword}
-        setSearchKeyword={setSearchKeyword}
-        items={items}
-        isLoading={isPending || isLoading}
-      />
-    </section>
+    <ErrorBoundary>
+      <section className="max-w-sm flex items-center">
+        <Button
+          variant="outline"
+          size="icon"
+          className="mr-2"
+          onClick={onSetCurrenLocation}
+          title="Use current location"
+          aria-label="Use current location"
+        >
+          <MapPin className="absolute h-4 w-4" />
+        </Button>
+        <SearchCityDisplay
+          selectedCity={selectedCity}
+          onSelectedValueChange={onSelectedValueChange}
+          searchKeyword={searchKeyword}
+          setSearchKeyword={setSearchKeyword}
+          items={items}
+          isLoading={isPending || isLoading}
+        />
+      </section>
+    </ErrorBoundary>
   );
 };
 

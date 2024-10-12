@@ -1,6 +1,6 @@
 import React, { useCallback } from "react";
 import { useGetCoords } from "@/hooks";
-import { Loading } from "@/components";
+import { ErrorBoundary, Loading } from "@/components";
 import { CitySuggestion } from "@/services/api/geocoding/types";
 
 const SearchCitySection = React.lazy(
@@ -24,21 +24,23 @@ function Home() {
   }, []);
 
   return (
-    <div className="flex flex-col flex-1 w-full h-full min-h-dvh max-w-7xl mx-auto">
-      {coords ? (
-        <>
-          <SearchCitySection
-            onCitySelect={onCitySelect}
-            onSetCurrentCoords={setCurrentCoords}
-          />
-          <AddressSection coords={coords} />
-          <WeatherSection coords={coords} />
-          <ForecastSection coords={coords} />
-        </>
-      ) : (
-        <Loading text="Loading weather data" />
-      )}
-    </div>
+    <ErrorBoundary>
+      <div className="flex flex-col flex-1 w-full h-full min-h-dvh max-w-7xl mx-auto">
+        {coords ? (
+          <>
+            <SearchCitySection
+              onCitySelect={onCitySelect}
+              onSetCurrentCoords={setCurrentCoords}
+            />
+            <AddressSection coords={coords} />
+            <WeatherSection coords={coords} />
+            <ForecastSection coords={coords} />
+          </>
+        ) : (
+          <Loading text="Loading weather data" />
+        )}
+      </div>
+    </ErrorBoundary>
   );
 }
 

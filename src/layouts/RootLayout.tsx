@@ -1,10 +1,11 @@
 import { ModeToggle } from "@/components/ModeToggle";
 import { Button } from "@/components/ui/button";
 import Logo from "@/assets/logo.svg";
+import { ErrorBoundary } from "@/components";
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <>
+    <ErrorBoundary>
       <Button
         variant="outline"
         size="icon"
@@ -24,7 +25,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
         <ModeToggle />
       </div>
       {children}
-    </>
+    </ErrorBoundary>
   );
 };
 
