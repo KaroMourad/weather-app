@@ -12,4 +12,7 @@ export interface DailyForecastData {
   temperature_2m_max: number[];
   temperature_2m_min: number[];
   time: string[];
+  weather_code: WeatherCode[];
+  sunrise: string[];
+  sunset: string[];
 }

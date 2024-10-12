@@ -17,7 +17,7 @@ const AddressSection = React.lazy(
 );
 
 function Home() {
-  const { coords, setCoords } = useGetCoords();
+  const { coords, setCoords, setCurrentCoords } = useGetCoords();
 
   const onCitySelect = useCallback((city: CitySuggestion) => {
     setCoords({ latitude: city.latitude, longitude: city.longitude });
@@ -27,7 +27,10 @@ function Home() {
     <div className="flex flex-col flex-1 w-full h-full min-h-dvh max-w-7xl mx-auto">
       {coords ? (
         <>
-          <SearchCitySection onCitySelect={onCitySelect} />
+          <SearchCitySection
+            onCitySelect={onCitySelect}
+            onSetCurrentCoords={setCurrentCoords}
+          />
           <AddressSection coords={coords} />
           <WeatherSection coords={coords} />
           <ForecastSection coords={coords} />

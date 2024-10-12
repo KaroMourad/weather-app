@@ -1,7 +1,7 @@
-import { cn } from "@/lib/utils";
-import { Command as CommandPrimitive } from "cmdk";
 import { Check } from "lucide-react";
 import { useMemo, useState } from "react";
+import { Command as CommandPrimitive } from "cmdk";
+import { cn } from "@/lib/utils";
 import { Popover, PopoverAnchor, PopoverContent } from "./popover";
 import {
   Command,
@@ -63,8 +63,8 @@ function AutoComplete<T extends string>({
   };
 
   return (
-    <div className="flex items-center">
-      <Popover open={open} onOpenChange={setOpen}>
+    <div className="flex items-center w-full">
+      <Popover open={!!searchValue && open} onOpenChange={setOpen}>
         <Command shouldFilter={false}>
           <PopoverAnchor asChild>
             <CommandPrimitive.Input
@@ -74,8 +74,9 @@ function AutoComplete<T extends string>({
               onKeyDown={(e) => setOpen(e.key !== "Escape")}
               onMouseDown={() => setOpen((open) => !!searchValue || !open)}
               onFocus={() => setOpen(true)}
+              aria-label="Search"
             >
-              <Input placeholder={placeholder} />
+              <Input placeholder={placeholder} className="text-md"/>
             </CommandPrimitive.Input>
           </PopoverAnchor>
           {!open && <CommandList aria-hidden="true" className="hidden" />}
@@ -93,7 +94,7 @@ function AutoComplete<T extends string>({
             className="w-[--radix-popover-trigger-width] p-0"
           >
             <CommandList>
-              {isLoading && (
+              {isLoading && searchValue && (
                 <CommandPrimitive.Loading>
                   <div className="p-1">
                     <Skeleton className="h-6 w-full" />
@@ -122,7 +123,7 @@ function AutoComplete<T extends string>({
                   ))}
                 </CommandGroup>
               ) : null}
-              {!isLoading ? (
+              {!isLoading && searchValue ? (
                 <CommandEmpty>{emptyMessage ?? "No items."}</CommandEmpty>
               ) : null}
             </CommandList>

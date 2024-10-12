@@ -2,14 +2,17 @@ import { fetchCitySuggestions } from "@/services/api";
 import { CitySuggestion } from "@/services/api/geocoding/types";
 import { useQuery } from "@tanstack/react-query";
 
+/**
+ * Fetch city suggestions based on the search keyword
+ * @param value  The city name to search for suggestions
+ * @returns An array of city suggestions
+ */
 const useFetchCitySuggestions = (value: string) => {
-  const { data, isLoading, error } = useQuery<CitySuggestion[]>({
+  return useQuery<CitySuggestion[]>({
     queryKey: ["citySuggestions", value],
     queryFn: () => fetchCitySuggestions(value),
     enabled: value.length > 2,
   });
-
-  return { data, isLoading, error };
 };
 
 export default useFetchCitySuggestions;

@@ -3,9 +3,20 @@ import { fetchWeather } from "@/services/api";
 import { CurrentWeatherData } from "@/services/api/forecast/types";
 import { Coords } from "@/types/coords";
 
-const useFetchWeather = (coords: Coords | null) => {
+const MINUTE = 1000 * 60;
+
+/**
+ * Fetch the current weather based on the coordinates.
+ * @param coords The coordinates to fetch the weather for
+ * @param refetchInterval The interval to refetch the data
+ * @returns The current weather data
+ */
+const useFetchWeather = (
+  coords: Coords | null,
+  refetchInterval: number = MINUTE
+) => {
   const { latitude, longitude } = coords || {};
-  const { data, isLoading, error } = useQuery<CurrentWeatherData>({
+  return useQuery<CurrentWeatherData>({
     queryKey: ["currentWeather", latitude, longitude],
     queryFn: () => {
       if (!latitude || !longitude)
@@ -14,9 +25,8 @@ const useFetchWeather = (coords: Coords | null) => {
       return fetchWeather(latitude, longitude);
     },
     enabled: !!latitude && !!longitude,
+    refetchInterval,
   });
-
-  return { data, isLoading, error };
 };
 
 export default useFetchWeather;

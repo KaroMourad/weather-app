@@ -15,9 +15,12 @@ export const fetchWeather = async (
   longitude: number
 ): Promise<CurrentWeatherData> => {
   try {
-    const res = await fetch(
-      `${FORECAST_API_URL}?latitude=${latitude}&longitude=${longitude}&current_weather=true`
-    );
+    const params = new URLSearchParams({
+      latitude: latitude.toString(),
+      longitude: longitude.toString(),
+      current_weather: "true",
+    });
+    const res = await fetch(`${FORECAST_API_URL}?${params.toString()}`);
     const data = await res.json();
     if (!data.current_weather) {
       throw new Error("No weather data found");
@@ -37,12 +40,18 @@ export const fetchWeather = async (
  */
 export const fetchForecast = async (
   latitude: number,
-  longitude: number
+  longitude: number,
+  forecastDays = 5
 ): Promise<DailyForecastData> => {
+  const params = new URLSearchParams({
+    latitude: latitude.toString(),
+    longitude: longitude.toString(),
+    daily: "temperature_2m_max,temperature_2m_min,weather_code,sunrise,sunset",
+    timezone: "auto",
+    forecast_days: forecastDays.toString(),
+  });
   try {
-    const res = await fetch(
-      `${FORECAST_API_URL}?latitude=${latitude}&longitude=${longitude}&daily=temperature_2m_max,temperature_2m_min&timezone=auto`
-    );
+    const res = await fetch(`${FORECAST_API_URL}?${params.toString()}`);
     const data = await res.json();
     if (!data.daily) {
       throw new Error("No forecast data found");

@@ -13,7 +13,11 @@ export const fetchCitySuggestions = async (
   city: string
 ): Promise<CitySuggestion[]> => {
   try {
-    const response = await fetch(`${SEARCH_URL}?name=${city}&count=3`);
+    const params = new URLSearchParams({
+      name: city,
+      count: "3",
+    });
+    const response = await fetch(`${SEARCH_URL}?${params.toString()}`);
     const data = await response.json();
     if (!data.results) {
       throw new Error("No results found");

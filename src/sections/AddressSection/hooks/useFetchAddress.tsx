@@ -3,8 +3,14 @@ import { fetchAddress } from "@/services/api";
 import { Coords } from "@/types/coords";
 import { AddressData } from "@/services/api/reverse-geocoding/types";
 
+/**
+ * Fetch address from coordinates using reverse geocoding
+ * @param coords
+ * @returns object containing address details
+ * @throws An error if the request fails or no results are found
+ */
 const useFetchAddress = (coords: Coords | null) => {
-  const { data, isLoading, error } = useQuery<AddressData, Error>({
+  return useQuery<AddressData, Error>({
     queryKey: ["address", coords],
     queryFn: () => {
       if (!coords) return Promise.reject(new Error("No coordinates available"));
@@ -12,8 +18,6 @@ const useFetchAddress = (coords: Coords | null) => {
     },
     enabled: !!coords,
   });
-
-  return { address: data, isLoading, error };
 };
 
 export default useFetchAddress;

@@ -4,18 +4,17 @@ import { useFetchAddress } from "./hooks";
 import { Skeleton } from "@/components/ui/skeleton";
 
 const AddressSection: React.FC<AddressSectionProps> = ({ coords }) => {
-  const { address, isLoading, error } = useFetchAddress(coords);
-
+  const { data, isLoading, error } = useFetchAddress(coords);
   return (
-    <section className="py-4 h-24">
+    <section className="mt-4">
       {isLoading ? (
-        <Skeleton className="h-full w-full" />
+        <Skeleton className="h-full min-h-16 w-96" />
       ) : error ? (
         <p className="text-red-500">{error.message}</p>
       ) : (
-        !!address && (
+        !!data && (
           <h2 className="text-2xl font-bold">
-            {`${address.display_name}`}
+            {`${data.display_name}`}
             <p className="text-sm text-gray-500 mt-2">
               {`${coords?.latitude}, ${coords?.longitude}`}
             </p>

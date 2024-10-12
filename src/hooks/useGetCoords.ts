@@ -7,7 +7,7 @@ import { useGetCurrentLocation } from ".";
  * @returns {Object} - The coordinates and a function to set the coordinates.
  * 
  * @example
- * const { coords, setCoords } = useGetCoords();
+ * const { coords, setCoords, setCurrentCoords } = useGetCoords();
  */
 const useGetCoords = () => {
   const [coords, setCoords] = useState<Coords | null>(null);
@@ -20,7 +20,11 @@ const useGetCoords = () => {
     }
   }, [currentCoords]);
 
-  return { coords, setCoords };
+  const setCurrentCoords = () => {
+    setCoords(currentCoords);
+  };
+
+  return { coords, setCoords, setCurrentCoords };
 };
 
 export default useGetCoords;

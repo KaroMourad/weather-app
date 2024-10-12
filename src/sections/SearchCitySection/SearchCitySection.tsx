@@ -1,17 +1,21 @@
 import React, { useCallback, useMemo, useState } from "react";
+import { MapPin } from "lucide-react";
 import { useDebouncedValue } from "@/hooks";
 import { CitySuggestion } from "@/services/api/geocoding/types";
 import { SearchCitySectionProps } from "./SearchCitySection.types";
 import { useFetchCitySuggestions } from "./hooks";
 import SearchCityDisplay from "./SearchCityDisplay";
+import { Button } from "@/components/ui/button";
 
 const SearchCitySection: React.FC<SearchCitySectionProps> = ({
   onCitySelect,
+  onSetCurrentCoords,
 }) => {
   const [searchKeyword, setSearchKeyword] = useState<string>("");
   const [selectedCity, setSelectedCity] = useState<string>("");
-  const debouncedValue = useDebouncedValue(searchKeyword, 500);
-  const { data, isLoading } = useFetchCitySuggestions(debouncedValue);
+  const debouncedValue = useDebouncedValue(searchKeyword, 300);
+  const { data, isLoading, isPending } =
+    useFetchCitySuggestions(debouncedValue);
 
   const citySuggestionsMap = useMemo(() => {
     return (data || []).reduce((acc, item) => {
@@ -39,15 +43,24 @@ const SearchCitySection: React.FC<SearchCitySectionProps> = ({
     [onCitySelect, items, citySuggestionsMap]
   );
 
+  const onSetCurrenLocation = () => {
+    setSelectedCity("");
+    setSearchKeyword("");
+    onSetCurrentCoords();
+  };
+
   return (
-    <section className="py-4">
+    <section className="mt-4 max-w-sm flex items-center">
+      <Button className="mr-2" onClick={onSetCurrenLocation}>
+        <MapPin size={16} />
+      </Button>
       <SearchCityDisplay
         selectedCity={selectedCity}
         onSelectedValueChange={onSelectedValueChange}
         searchKeyword={searchKeyword}
         setSearchKeyword={setSearchKeyword}
         items={items}
-        isLoading={isLoading}
+        isLoading={isPending || isLoading}
       />
     </section>
   );

@@ -10,9 +10,8 @@ const WeatherIcon: React.FC<WeatherIconProps> = ({
   className = "",
   is_day = true,
 }) => {
-  const Component = is_day
-    ? WEATHER_ICONS_DAY_MAP[weathercode]
-    : WEATHER_ICONS_NIGHT_MAP[weathercode] || Sun;
+  const ICONS_MAP = is_day ? WEATHER_ICONS_DAY_MAP : WEATHER_ICONS_NIGHT_MAP;
+  const Component = ICONS_MAP[weathercode] || Sun;
   return <Component className={className} />;
 };
 

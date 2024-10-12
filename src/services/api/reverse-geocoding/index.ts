@@ -15,9 +15,13 @@ export const fetchAddress = async (
   longitude: number
 ): Promise<AddressData> => {
   try {
-    const response = await fetch(
-      `${REVERSE_URL}?format=json&lat=${latitude}&lon=${longitude}&zoom=10`
-    );
+    const params = new URLSearchParams({
+      lat: latitude.toString(),
+      lon: longitude.toString(),
+      format: "json",
+      zoom: "10",
+    });
+    const response = await fetch(`${REVERSE_URL}?${params.toString()}`);
     const data = await response.json();
     if (!data.address) {
       throw new Error("No address data found");

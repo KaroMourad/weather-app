@@ -2,6 +2,7 @@ import { CitySuggestion } from "@/services/api/geocoding/types";
 
 export interface SearchCitySectionProps {
   onCitySelect: (city: CitySuggestion) => void;
+  onSetCurrentCoords: () => void;
 }
 
 export interface SearchCityDisplayProps {
