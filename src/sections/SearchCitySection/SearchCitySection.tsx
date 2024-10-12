@@ -51,8 +51,15 @@ const SearchCitySection: React.FC<SearchCitySectionProps> = ({
 
   return (
     <section className="max-w-sm flex items-center">
-      <Button className="mr-2" onClick={onSetCurrenLocation}>
-        <MapPin size={16} />
+      <Button
+        variant="outline"
+        size="icon"
+        className="mr-2"
+        onClick={onSetCurrenLocation}
+        title="Use current location"
+        aria-label="Use current location"
+      >
+        <MapPin className="absolute h-4 w-4" />
       </Button>
       <SearchCityDisplay
         selectedCity={selectedCity}

@@ -6,10 +6,11 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <>
       <Button
-        size={"icon"}
+        variant="outline"
+        size="icon"
         asChild
-        title={"Home"}
-        className="fixed top-4 left-4 z-[3] rounded-lg"
+        title="Home"
+        className="fixed top-4 left-4 z-[3]"
       >
         <a href="/" className="font-black text-lg">
           <img src={Logo} alt="Logo" className="w-6 h-6" />
