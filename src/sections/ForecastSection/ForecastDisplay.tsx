@@ -32,7 +32,7 @@ const ForecastDisplay: React.FC<ForecastDisplayProps> = ({ data }) => {
         return (
           <Card
             key={index}
-            className="flex flex-col p-4 bg-muted min-h-28 min-w-full md:min-w-52 justify-between"
+            className="flex flex-col p-4 min-h-28 min-w-full md:min-w-52 justify-between"
           >
             <div className="flex justify-between">
               <span className="text-md">{index === 0 ? "Today" : day}</span>

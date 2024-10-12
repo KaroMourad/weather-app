@@ -15,7 +15,7 @@ const AddressSection: React.FC<AddressSectionProps> = ({ coords }) => {
         !!data && (
           <h2 className="text-2xl font-bold">
             {`${data.display_name}`}
-            <p className="text-sm text-gray-500 mt-2">
+            <p className="text-sm mt-2">
               {`${coords?.latitude}, ${coords?.longitude}`}
             </p>
           </h2>

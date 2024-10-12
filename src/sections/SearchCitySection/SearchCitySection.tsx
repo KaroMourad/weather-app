@@ -50,7 +50,7 @@ const SearchCitySection: React.FC<SearchCitySectionProps> = ({
   };
 
   return (
-    <section className="mt-4 max-w-sm flex items-center">
+    <section className="max-w-sm flex items-center">
       <Button className="mr-2" onClick={onSetCurrenLocation}>
         <MapPin size={16} />
       </Button>

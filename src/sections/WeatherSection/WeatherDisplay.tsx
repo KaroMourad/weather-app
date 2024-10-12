@@ -6,7 +6,7 @@ import { WeatherIcon } from "@/components";
 const WeatherDisplay: React.FC<WeatherDisplayProps> = ({ data }) => {
   const { temperature, winddirection, windspeed, weathercode, is_day } = data;
   return (
-    <Card className="p-4 bg-blue-200 h-full min-w-64 inline-flex flex-col">
+    <Card className="p-4 h-full min-w-64 inline-flex flex-col">
       <div className="flex justify-between">
         <WeatherIcon
           weathercode={weathercode}

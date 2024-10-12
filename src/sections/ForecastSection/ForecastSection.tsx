@@ -13,7 +13,7 @@ const ForecastSection: React.FC<ForecastSectionProps> = ({ coords }) => {
   );
   return (
     <section className="mt-4 flex flex-col flex-1">
-      <h2 className="text-lg text-muted-foreground mb-2">
+      <h2 className="text-lg mb-2">
         {FORECAST_DAYS} Day Forecast
       </h2>
       {isLoading ? (
