@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import { ErrorBoundary } from "@/components";
 
 const SearchCitySection: React.FC<SearchCitySectionProps> = () => {
-  const { coords, updateCoords, setCurrentLocation, currentLocationError } =
+  const { updateCoords, setCurrentLocation, currentLocationError } =
     useCoords();
   const [searchKeyword, setSearchKeyword] = useState<string>("");
   const [selectedCity, setSelectedCity] = useState<string>("");
@@ -77,7 +77,8 @@ const SearchCitySection: React.FC<SearchCitySectionProps> = () => {
         {currentLocationError && (
           <div className="mt-2">
             <p className="text-muted-foreground">
-              {currentLocationError.message}. Try to search for a city instead. You can view browser settings to enable location access.
+              {currentLocationError.message}. Try to search for a city instead.
+              You can view browser settings to enable location access.
             </p>
           </div>
         )}
