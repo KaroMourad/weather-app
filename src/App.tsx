@@ -11,11 +11,9 @@ const App: React.FC = () => {
     <ThemeProvider defaultTheme={Theme.DARK} storageKey="vite-ui-theme">
       <QueryProvider>
         <RootLayout>
-          <main className="relative min-h-dvh h-full flex flex-col p-4 pt-20">
-            <React.Suspense fallback={<Loading />}>
-              <Home />
-            </React.Suspense>
-          </main>
+          <React.Suspense fallback={<Loading />}>
+            <Home />
+          </React.Suspense>
         </RootLayout>
       </QueryProvider>
     </ThemeProvider>

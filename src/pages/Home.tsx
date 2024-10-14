@@ -17,7 +17,7 @@ const AddressSection = React.lazy(
 );
 
 function Home() {
-  const { coords, setCoords, setCurrentCoords } = useGetCoords();
+  const { coords, setCoords, setCurrentCoords, error } = useGetCoords();
 
   const onCitySelect = useCallback((city: CitySuggestion) => {
     setCoords({ latitude: city.latitude, longitude: city.longitude });
@@ -25,20 +25,28 @@ function Home() {
 
   return (
     <ErrorBoundary>
-      <div className="flex flex-col flex-1 w-full h-full min-h-dvh max-w-7xl mx-auto">
-        {coords ? (
-          <>
-            <SearchCitySection
-              onCitySelect={onCitySelect}
-              onSetCurrentCoords={setCurrentCoords}
-            />
-            <AddressSection coords={coords} />
-            <WeatherSection coords={coords} />
-            <ForecastSection coords={coords} />
-          </>
-        ) : (
-          <Loading text="Loading weather data" />
-        )}
+      <div className="flex flex-col flex-1 w-full h-full max-w-7xl mx-auto">
+        <React.Suspense fallback={<Loading />}>
+          {error ? (
+            <div className="text-red-500 text-center">
+              {error.message}
+              <p>
+                To enable location services, please check your browser settings
+                and allow access.
+              </p>
+            </div>
+          ) : (
+            <>
+              <SearchCitySection
+                onCitySelect={onCitySelect}
+                onSetCurrentCoords={setCurrentCoords}
+              />
+              <AddressSection coords={coords} />
+              <WeatherSection coords={coords} />
+              <ForecastSection coords={coords} />
+            </>
+          )}
+        </React.Suspense>
       </div>
     </ErrorBoundary>
   );
