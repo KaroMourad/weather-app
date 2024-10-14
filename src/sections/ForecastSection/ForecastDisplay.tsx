@@ -17,6 +17,7 @@ const ForecastDisplay: React.FC<ForecastDisplayProps> = ({ data }) => {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 py-4 w-full">
       {temperature_2m_max.map((tempMax: number, index: number) => {
+        const tempMin = temperature_2m_min[index];
         const day = new Date(time[index]).toLocaleDateString("en-US", {
           weekday: "long",
         });
@@ -43,8 +44,9 @@ const ForecastDisplay: React.FC<ForecastDisplayProps> = ({ data }) => {
               />
             </div>
             <div className="flex items-center text-foreground whitespace-nowrap">
-              <span className="mr-2">{temperature_2m_min[index]}°C</span>-
-              <span className="ml-2">{tempMax}°C</span>
+              <span className="mr-4">{tempMin}°C</span>
+              <span className="text-muted-foreground">~</span>
+              <span className="ml-4">{tempMax}°C</span>
             </div>
             <div className="flex items-center text-sm text-muted-foreground whitespace-nowrap mt-2">
               <Sunrise size={16} className="mr-2" />

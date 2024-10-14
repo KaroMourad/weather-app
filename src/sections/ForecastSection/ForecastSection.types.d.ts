@@ -5,6 +5,4 @@ export interface ForecastDisplayProps {
   data: DailyForecastData;
 }
 
-export interface ForecastSectionProps {
-  coords: Coords | null;
-}
+export interface ForecastSectionProps {}

@@ -6,6 +6,4 @@ export interface WeatherDisplayProps {
   data: CurrentWeatherData;
 }
 
-export interface WeatherSectionProps {
-  coords: Coords | null;
-}
+export interface WeatherSectionProps {}

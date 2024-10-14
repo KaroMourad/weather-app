@@ -16,7 +16,6 @@ const useFetchAddress = (coords: Coords | null) => {
       if (!coords) return Promise.reject(new Error("No coordinates available"));
       return fetchAddress(coords.latitude, coords.longitude);
     },
-    enabled: !!coords,
   });
 };
 

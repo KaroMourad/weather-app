@@ -23,6 +23,7 @@ type Props<T extends string> = {
   emptyMessage?: string;
   placeholder?: string;
   resetOnSelect?: boolean;
+  className?: string;
 };
 
 function AutoComplete<T extends string>({
@@ -35,6 +36,7 @@ function AutoComplete<T extends string>({
   emptyMessage = "No items.",
   placeholder = "Search...",
   resetOnSelect = false,
+  className,
 }: Props<T>) {
   const [open, setOpen] = useState(false);
 
@@ -63,7 +65,7 @@ function AutoComplete<T extends string>({
   };
 
   return (
-    <div className="flex items-center w-full">
+    <div className={cn("flex items-center w-full", className)}>
       <Popover open={!!searchValue && open} onOpenChange={setOpen}>
         <Command shouldFilter={false}>
           <PopoverAnchor asChild>
@@ -76,7 +78,7 @@ function AutoComplete<T extends string>({
               onFocus={() => setOpen(true)}
               aria-label="Search"
             >
-              <Input placeholder={placeholder} className="text-md"/>
+              <Input placeholder={placeholder} className="text-md" />
             </CommandPrimitive.Input>
           </PopoverAnchor>
           {!open && <CommandList aria-hidden="true" className="hidden" />}

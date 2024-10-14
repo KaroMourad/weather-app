@@ -1,11 +1,7 @@
-import React, { useCallback } from "react";
-import { useGetCoords } from "@/hooks";
+import React from "react";
 import { ErrorBoundary, Loading } from "@/components";
-import { CitySuggestion } from "@/services/api/geocoding/types";
+import { SearchCitySection } from "@/sections/SearchCitySection";
 
-const SearchCitySection = React.lazy(
-  () => import("@/sections/SearchCitySection/SearchCitySection")
-);
 const WeatherSection = React.lazy(
   () => import("@/sections/WeatherSection/WeatherSection")
 );
@@ -17,35 +13,14 @@ const AddressSection = React.lazy(
 );
 
 function Home() {
-  const { coords, setCoords, setCurrentCoords, error } = useGetCoords();
-
-  const onCitySelect = useCallback((city: CitySuggestion) => {
-    setCoords({ latitude: city.latitude, longitude: city.longitude });
-  }, []);
-
   return (
     <ErrorBoundary>
       <div className="flex flex-col flex-1 w-full h-full max-w-7xl mx-auto">
         <React.Suspense fallback={<Loading />}>
-          {error ? (
-            <div className="text-red-500 text-center">
-              {error.message}
-              <p>
-                To enable location services, please check your browser settings
-                and allow access.
-              </p>
-            </div>
-          ) : (
-            <>
-              <SearchCitySection
-                onCitySelect={onCitySelect}
-                onSetCurrentCoords={setCurrentCoords}
-              />
-              <AddressSection coords={coords} />
-              <WeatherSection coords={coords} />
-              <ForecastSection coords={coords} />
-            </>
-          )}
+          <SearchCitySection />
+          <AddressSection />
+          <WeatherSection />
+          <ForecastSection />
         </React.Suspense>
       </div>
     </ErrorBoundary>

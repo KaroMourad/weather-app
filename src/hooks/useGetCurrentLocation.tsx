@@ -6,30 +6,30 @@ import { Coords } from "@/types/coords";
  * @returns {Object} - The current coordinates and error message.
  *
  * @example
- * const { currentCoords, error } = useGetCurrentLocation();
+ * const { currentCoords, currentLocationError } = useGetCurrentLocation();
  */
 const useGetCurrentLocation = () => {
-  const [coords, setCoords] = useState<Coords | null>(null);
-  const [error, setError] = useState<string | null>(null);
+  const [currentCoords, setCurrentCoords] = useState<Coords | null>(null);
+  const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
     if (!navigator.geolocation) {
-      setError("Geolocation is not supported.");
+      setError(new Error("Geolocation is not supported."));
     }
     navigator.geolocation.getCurrentPosition(
       (position) => {
-        setCoords({
+        setCurrentCoords({
           latitude: position.coords.latitude,
           longitude: position.coords.longitude,
         });
       },
-      (error) => {
-        setError(error.message);
+      (error: GeolocationPositionError) => {
+        setError(new Error(error.message));
       }
     );
   }, []);
 
-  return { currentCoords: coords, error };
+  return { currentCoords, setCurrentCoords, currentLocationError: error };
 };
 
 export default useGetCurrentLocation;

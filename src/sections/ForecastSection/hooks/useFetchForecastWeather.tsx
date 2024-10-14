@@ -13,16 +13,14 @@ const useFetchForecastWeather = (
   coords: Coords | null,
   forecastDays: number
 ) => {
-  const { latitude, longitude } = coords || {};
   return useQuery<DailyForecastData>({
-    queryKey: ["forecast", longitude, latitude, forecastDays],
+    queryKey: ["forecast", coords, forecastDays],
     queryFn: () => {
-      if (!latitude || !longitude) {
+      if (!coords) {
         return Promise.reject(new Error("No city selected"));
       }
-      return fetchForecast(latitude, longitude, forecastDays);
+      return fetchForecast(coords.latitude, coords.longitude, forecastDays);
     },
-    enabled: !!latitude && !!longitude,
   });
 };
 

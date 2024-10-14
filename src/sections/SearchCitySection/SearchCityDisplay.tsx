@@ -20,6 +20,7 @@ const SearchCityDisplay: React.FC<SearchCityDisplayProps> = ({
       isLoading={isLoading}
       emptyMessage="No cities found."
       placeholder="Search for a city or place..."
+      className="w-64"
     />
   );
 };

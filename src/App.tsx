@@ -1,22 +1,19 @@
-import React from "react";
-import { QueryProvider } from "./services/api";
+import { FC, Suspense } from "react";
+import { Route, Routes } from "react-router-dom";
 import { Loading } from "./components";
-import { Theme, ThemeProvider } from "./components/ThemeProvider";
 import RootLayout from "./layouts/RootLayout";
 
-const Home = React.lazy(() => import("./pages/Home"));
+import Home from "./pages/Home";
 
-const App: React.FC = () => {
+const App: FC = () => {
   return (
-    <ThemeProvider defaultTheme={Theme.DARK} storageKey="vite-ui-theme">
-      <QueryProvider>
-        <RootLayout>
-          <React.Suspense fallback={<Loading />}>
-            <Home />
-          </React.Suspense>
-        </RootLayout>
-      </QueryProvider>
-    </ThemeProvider>
+    <Suspense fallback={<Loading />}>
+      <RootLayout>
+        <Routes>
+          <Route path="/" element={<Home />} />
+        </Routes>
+      </RootLayout>
+    </Suspense>
   );
 };
 

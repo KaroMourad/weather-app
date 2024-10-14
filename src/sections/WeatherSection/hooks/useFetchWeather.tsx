@@ -15,16 +15,12 @@ const useFetchWeather = (
   coords: Coords | null,
   refetchInterval: number = MINUTE
 ) => {
-  const { latitude, longitude } = coords || {};
   return useQuery<CurrentWeatherData>({
-    queryKey: ["currentWeather", latitude, longitude],
+    queryKey: ["currentWeather", coords],
     queryFn: () => {
-      if (!latitude || !longitude)
-        return Promise.reject(new Error("No address available"));
-
-      return fetchWeather(latitude, longitude);
+      if (!coords) return Promise.reject(new Error("No address available"));
+      return fetchWeather(coords.latitude, coords.longitude);
     },
-    enabled: !!latitude && !!longitude,
     refetchInterval,
   });
 };

@@ -4,10 +4,12 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { WeatherSectionProps } from "./WeatherSection.types";
 import { useFetchWeather } from "./hooks";
 import { ErrorBoundary } from "@/components";
+import { useCoordsParam } from "@/hooks";
 
-const WeatherSection: React.FC<WeatherSectionProps> = ({ coords }) => {
-  const { data, isLoading, error } = useFetchWeather(coords);
-  return (
+const WeatherSection: React.FC<WeatherSectionProps> = () => {
+  const { coordsParam } = useCoordsParam();
+  const { data, isLoading, error } = useFetchWeather(coordsParam);
+  return coordsParam ? (
     <ErrorBoundary>
       <section className="mt-4 min-h-36">
         {isLoading ? (
@@ -19,7 +21,7 @@ const WeatherSection: React.FC<WeatherSectionProps> = ({ coords }) => {
         )}
       </section>
     </ErrorBoundary>
-  );
+  ) : null;
 };
 
 WeatherSection.displayName = "WeatherSection";

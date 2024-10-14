@@ -4,15 +4,17 @@ import ForecastDisplay from "./ForecastDisplay";
 import { useFetchForecastWeather } from "./hooks";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ErrorBoundary } from "@/components";
+import { useCoordsParam } from "@/hooks";
 
 const FORECAST_DAYS = 5;
 
-const ForecastSection: React.FC<ForecastSectionProps> = ({ coords }) => {
+const ForecastSection: React.FC<ForecastSectionProps> = () => {
+  const { coordsParam } = useCoordsParam();
   const { data, isLoading, error } = useFetchForecastWeather(
-    coords,
+    coordsParam,
     FORECAST_DAYS
   );
-  return (
+  return coordsParam ? (
     <ErrorBoundary>
       <section className="mt-4 flex flex-col flex-1">
         <h2 className="text-lg mb-2">{FORECAST_DAYS} Day Forecast</h2>
@@ -32,7 +34,7 @@ const ForecastSection: React.FC<ForecastSectionProps> = ({ coords }) => {
         )}
       </section>
     </ErrorBoundary>
-  );
+  ) : null;
 };
 
 ForecastSection.displayName = "ForecastSection";

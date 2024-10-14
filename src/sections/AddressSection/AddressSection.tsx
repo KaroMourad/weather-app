@@ -3,10 +3,13 @@ import { AddressSectionProps } from "./AddressSection.types";
 import { useFetchAddress } from "./hooks";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ErrorBoundary } from "@/components";
+import { useCoordsParam } from "@/hooks";
 
-const AddressSection: React.FC<AddressSectionProps> = ({ coords }) => {
-  const { data, isLoading, error } = useFetchAddress(coords);
-  return (
+const AddressSection: React.FC<AddressSectionProps> = () => {
+  const { coordsParam } = useCoordsParam();
+  const { data, isLoading, error } = useFetchAddress(coordsParam);
+
+  return coordsParam ? (
     <ErrorBoundary>
       <section className="mt-4">
         {isLoading ? (
@@ -17,15 +20,13 @@ const AddressSection: React.FC<AddressSectionProps> = ({ coords }) => {
           !!data && (
             <h2 className="text-2xl font-bold">
               {`${data.display_name}`}
-              <p className="text-sm mt-2">
-                {`${coords?.latitude}, ${coords?.longitude}`}
-              </p>
+              <p className="text-sm mt-2">{`${coordsParam.latitude}, ${coordsParam.longitude}`}</p>
             </h2>
           )
         )}
       </section>
     </ErrorBoundary>
-  );
+  ) : null;
 };
 
 AddressSection.displayName = "AddressSection";
