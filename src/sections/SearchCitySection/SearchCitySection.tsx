@@ -74,15 +74,11 @@ const SearchCitySection: React.FC<SearchCitySectionProps> = () => {
             isLoading={isPending || isLoading}
           />
         </div>
-        {!coords && !isPending && !isLoading && (
+        {currentLocationError && (
           <div className="mt-2">
-            {currentLocationError && (
-              <p className="text-muted-foreground">
-                {currentLocationError.message}. Enable location services, to
-                automatically detect your location and weather.
-              </p>
-            )}
-            <p>Or you can search for a city manually.</p>
+            <p className="text-muted-foreground">
+              {currentLocationError.message}. Try to search for a city instead. You can view browser settings to enable location access.
+            </p>
           </div>
         )}
       </section>
